@@ -4,18 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hustlers.R;
 import com.example.hustlers.activities.MainActivity;
 import com.example.hustlers.interfaces.FragmentClickInterface;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textview.MaterialTextView;
 
 public class SignUpFragment extends Fragment {
 
@@ -47,7 +45,8 @@ public class SignUpFragment extends Fragment {
         //call methods here
         init(viewGroup);
         GoToSignIn(viewGroup);
-        SignUpUser(viewGroup);
+        //SignUpUser(viewGroup);
+        SignUp(viewGroup);
 
         return viewGroup;
     }
@@ -65,22 +64,31 @@ public class SignUpFragment extends Fragment {
     }
 
     private void GoToSignIn(ViewGroup view) {
+        view.getContext();
         btn_backToLogin.setOnClickListener(v -> clickInterface.BtnLoginClick());
     }
 
+    private void SignUp(ViewGroup view) {
+        btn_sign_up_user.setOnClickListener(view1 -> {
+            Toast.makeText(getContext(),"clicked",Toast.LENGTH_LONG).show();
+            try {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }catch (Exception e) {
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void SignUpUser(ViewGroup view) {
+
         //initialize firebase auth object
-
         btn_sign_up_user.setOnClickListener(v -> {
-
-            final String name = name_txt.getText().toString().trim();
+            /*final String name = name_txt.getText().toString().trim();
             final String lastName = surname_txt.getText().toString().trim();
             final String email = email_txt.getText().toString().trim();
-            String password = password_txt.getText().toString().trim();
-            String confirmPassword = confirm_pass_txt.getText().toString().trim();
-
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
+            final String password = password_txt.getText().toString().trim();
+            final String confirmPassword = confirm_pass_txt.getText().toString().trim();*/
         });
     }
 }

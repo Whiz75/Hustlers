@@ -10,8 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tool_bar"
@@ -21,72 +20,43 @@
             app:titleTextColor="@color/white"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
+        android:id="@+id/frag_host"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/app_bar"
-        >
+        android:layout_above="@id/bottom_nav_cv"/>
 
-        <LinearLayout
-            android:id="@+id/top_layout"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottom_nav_cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
+        app:cardPreventCornerOverlap="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp">
+
+        <com.ismaeldivita.chipnavigation.ChipNavigationBar
+            android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/header_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Find the most exciting startup jobs"
-                android:textStyle="bold"
-                android:textSize="24dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Find job"
-                android:layout_marginTop="20dp"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Applying process"
-                android:textSize="24dp"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="How it works"
-                android:textStyle="bold"
-                android:textSize="28dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1. search a job"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2. Apply for job"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3. Get your job"
-                />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/job_category_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </androidx.core.widget.NestedScrollView>
-
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:elevation="8dp"
+            android:padding="5dp"
+            app:cnb_iconSize="24dp"
+            app:cnb_menuResource="@menu/bottom_nav_menu"
+            app:cnb_orientationMode="horizontal"
+            app:cnb_radius="8dp"
+            app:cnb_unselectedColor="#000"
+            app:cnb_badgeColor="@color/dodger_blue"
+            android:overScrollMode="never" />
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottom_nav_dashboard"
+        android:title="Dashboard"
+        android:icon="@drawable/ic_account"
+        app:cnb_iconColor="@color/white_smoke"
+        app:cnb_backgroundColor="@color/blue"
+        app:cnb_textColor="@color/white_smoke" />
+
+    <item
+        android:id="@+id/bottom_nav_search"
+        android:title="Search"
+        android:icon="@drawable/ic_search"
+        app:cnb_iconColor="@color/white_smoke"
+        app:cnb_backgroundColor="@color/blue"
+        app:cnb_textColor="@color/white_smoke"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/bottom_nav_jobs"
+        android:title="Jobs"
+        android:icon="@drawable/ic_work"
+        app:cnb_iconColor="@color/white_smoke"
+        app:cnb_backgroundColor="@color/blue"
+        app:cnb_textColor="@color/white_smoke"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/bottom_nav_profile"
+        android:icon="@drawable/ic_account"
+        app:cnb_iconColor="@color/white_smoke"
+        app:cnb_backgroundColor="@color/blue"
+        app:cnb_textColor="@color/white_smoke"
+        android:title="Profile"
+        tools:ignore="HardcodedText" />
+</menu>
