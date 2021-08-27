@@ -11,8 +11,21 @@
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="Hustlers"
+        android:textColor="@color/blue"
         android:textSize="34sp"
-        android:layout_centerInParent="true" />
+        android:textStyle="bold"
+        android:fontFamily="@font/bungee"/>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/version_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/antic"
+        android:text="Version 1.0.0"
+        android:textStyle="bold"
+        android:layout_marginBottom="30dp"/>
 </RelativeLayout>

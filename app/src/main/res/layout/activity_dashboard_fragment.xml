@@ -23,7 +23,9 @@
             android:hint="search job"
             android:drawableLeft="@drawable/ic_search"
             android:drawablePadding="5dp"
-            app:cornerRadius="8dp" />
+            app:cornerRadius="8dp"
+            tools:ignore="HardcodedText,RtlHardcoded,TextFields"
+            android:importantForAutofill="no" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
