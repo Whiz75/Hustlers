@@ -7,14 +7,44 @@
     android:layout_height="match_parent"
     tools:context=".fragments.DashboardFragment">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/lo_search"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="search job"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="5dp"
+            app:cornerRadius="8dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/jobs_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lo_search"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        />
+
+
     <!-- TODO: Temporary Display Textview -->
-    <com.google.android.material.textview.MaterialTextView
+    <!--<com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DASHBOARD"
         android:textAlignment="center"
         android:layout_centerInParent="true"
-        android:textSize="36sp" />
+        android:textSize="36sp" />-->
 
     <!--<ScrollView
         android:layout_width="match_parent"

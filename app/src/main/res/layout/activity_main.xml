@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="HUSTLERS"
-            app:titleTextColor="@color/white"/>
+            app:titleTextColor="@color/white"
+            app:navigationIconTint="@color/white"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
