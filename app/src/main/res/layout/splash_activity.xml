@@ -12,11 +12,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:fontFamily="@font/bungee"
         android:text="Hustlers"
-        android:textColor="@color/blue"
+        android:textColor="@color/dodger_blue"
         android:textSize="34sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/bungee"/>
+        android:textStyle="bold" />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.ThreeBounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/dodger_blue"
+        android:layout_above="@id/version_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"/>
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/version_tv"
