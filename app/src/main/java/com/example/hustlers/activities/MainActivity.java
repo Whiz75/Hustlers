@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.hustlers.R;
+import com.example.hustlers.dialogs.AddJobDialogFragment;
 import com.example.hustlers.fragments.DashboardFragment;
 import com.example.hustlers.fragments.JobsFragment;
 import com.example.hustlers.fragments.ProfileFragment;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         //call methods
         init();
+        my_toolbar();
     }
 
     private void init() {
@@ -35,9 +38,19 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frag_host,new DashboardFragment()).commit();
         navigationBar.setItemSelected(R.id.bottom_nav_dashboard, true);
         tool_bar.setTitle("DASHBOARD");
-
         //call method
         listenToEvent();
+    }
+
+    private void my_toolbar()
+    {
+        tool_bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddJobDialogFragment fragment = new AddJobDialogFragment();
+                fragment.show(getSupportFragmentManager().beginTransaction(),"ADD JOB");
+            }
+        });
     }
 
     private void listenToEvent()
@@ -68,6 +81,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

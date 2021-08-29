@@ -28,7 +28,7 @@
         app:SpinKit_Color="@color/dodger_blue"
         android:layout_above="@id/version_tv"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="100dp"/>
 
 
     <com.google.android.material.textview.MaterialTextView

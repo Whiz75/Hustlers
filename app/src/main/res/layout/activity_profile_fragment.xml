@@ -270,7 +270,9 @@
             android:text="Profile"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:textAllCaps="true"
+            tools:ignore="HardcodedText" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="wrap_content"
@@ -298,22 +300,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical"
         android:layout_below="@id/app_bar"
-        android:padding="10dp"
-        android:layout_centerVertical="true">
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Account details"/>
+                android:text="Account details"
+                tools:ignore="HardcodedText" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/AccountDateTv"
@@ -322,9 +323,9 @@
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/profile_name_et"
@@ -335,9 +336,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/profile_surname_et"
@@ -348,9 +349,9 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/profile_email_et"
@@ -364,10 +365,10 @@
             android:id="@+id/update_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="update"
             android:textColor="@color/white"
-            android:layout_marginTop="20dp"
-            />
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
     <!--<LinearLayout
