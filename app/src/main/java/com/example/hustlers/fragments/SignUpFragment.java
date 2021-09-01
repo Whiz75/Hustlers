@@ -89,7 +89,7 @@ public class SignUpFragment extends Fragment {
                 final String confirmPassword = confirm_pass_txt.getText().toString().trim();
 
 
-                if (validate()) {
+                if (TextUtils.isEmpty(name)) {
                     FirebaseAuth
                             .getInstance()
                             .createUserWithEmailAndPassword(email,password)

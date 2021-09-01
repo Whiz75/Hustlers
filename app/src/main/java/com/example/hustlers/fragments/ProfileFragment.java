@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hustlers.R;
+import com.example.hustlers.models.UserModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -70,29 +73,33 @@ public class ProfileFragment extends Fragment {
     }
 
     private void update(View view) {
-        //String name = et_name.getText().toString();
-        //String surname = et_surname.getText().toString();
 
-        Map<String, Object> userMap = new HashMap<>();
-        userMap.put("name",et_name.getText().toString());
-        userMap.put("surname",et_surname.getText().toString());
+        /*Map<String, Object> userMap = new HashMap<>();
+                userMap.put("name",name);
+                userMap.put("surname",surname);*/
 
-        btnUpdate.setOnClickListener(view1 ->
+                /*UserModel user = new UserModel();
+                user.setName(name);
+                user.setSurname(surname);*/
+
+
+        btnUpdate.setOnClickListener(view1 -> {
+            String name = et_name.getText().toString().trim();
+            String surname = et_surname.getText().toString().trim();
+
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("name",name);
+            userMap.put("surname",surname);
 
             FirebaseFirestore
-            .getInstance()
-            .collection("Users")
-            .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-            .addSnapshotListener((value, error) -> {
-                if (value != null) {
-                    if (Objects.requireNonNull(value.get("name")).toString() == et_name.getText().toString()) {
-                        Toast.makeText(getContext(),"Name is the same!!!",Toast.LENGTH_LONG).show();
-                    }
-
-                    if (value.get("surname").toString() == et_surname.getText().toString()){
-                        Toast.makeText(getContext(),"Surname is the same!!!",Toast.LENGTH_LONG).show();
-                    }
-                }
-            }));
+                    .getInstance()
+                    .collection("Users")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .update(userMap)
+                    .addOnSuccessListener(unused ->
+                            Toast.makeText(getContext(),"User record updated!!!",Toast.LENGTH_LONG).show())
+                    .addOnFailureListener(e ->
+                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show());
+        });
     }
 }
