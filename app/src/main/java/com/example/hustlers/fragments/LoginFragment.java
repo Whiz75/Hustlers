@@ -1,8 +1,10 @@
 package com.example.hustlers.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -11,9 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.example.hustlers.R;
+import com.example.hustlers.activities.MainActivity;
 import com.example.hustlers.interfaces.FragmentClickInterface;
+import com.example.hustlers.models.UserModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -89,8 +97,20 @@ public class LoginFragment extends Fragment {
                 password_txt.setError( "Password can not be empty");
             }else
             {
-                /*Intent i = new Intent(getActivity(), MapActivity.class);
-                startActivity(i);*/
+                FirebaseAuth
+                        .getInstance()
+                        .signInWithEmailAndPassword(email,password)
+                        .addOnSuccessListener(authResult -> {
+                            Toast.makeText(getContext(),"User login successful!",Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                        }).addOnFailureListener(e -> {
+                            Toast.makeText(getContext(), "User login failed!",Toast.LENGTH_LONG).show();
+                        });
+
+                /*UserModel user = new UserModel();
+                user.setName(name);
+                user.setSurname(surname);*/
             }
         });
     }
