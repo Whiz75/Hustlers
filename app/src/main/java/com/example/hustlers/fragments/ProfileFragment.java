@@ -94,8 +94,5 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             }));
-
-        /*Toast.makeText(getContext(),"Update!!!",Toast.LENGTH_LONG).show();
-        Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();*/
     }
 }
