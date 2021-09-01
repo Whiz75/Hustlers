@@ -1,22 +1,36 @@
 package com.example.hustlers.models;
 
 public class JobModel {
+
+    String job_id;
     String job_experience;
     String job_description;
     String job_date;
     String job_location;
     String job_qualification;
+    String job_salary;
 
     public JobModel() {
        //empty constructor
     }
 
-    public JobModel(String job_experience, String job_description, String job_date, String job_location, String job_qualification) {
+    public JobModel(String job_experience, String job_description, String job_date,
+                    String job_location, String job_qualification,String job_salary, String job_id) {
         this.job_experience = job_experience;
         this.job_description = job_description;
         this.job_date = job_date;
         this.job_location = job_location;
         this.job_qualification = job_qualification;
+        this.job_salary = job_salary;
+        this.job_id = job_id;
+    }
+
+    public String getJob_id() {
+        return job_id;
+    }
+
+    public void setJob_id(String job_id) {
+        this.job_id = job_id;
     }
 
     public String getJob_experience() {
@@ -57,5 +71,13 @@ public class JobModel {
 
     public void setJob_qualification(String job_qualification) {
         this.job_qualification = job_qualification;
+    }
+
+    public String getJob_salary() {
+        return job_salary;
+    }
+
+    public void setJob_salary(String job_salary) {
+        this.job_salary = job_salary;
     }
 }

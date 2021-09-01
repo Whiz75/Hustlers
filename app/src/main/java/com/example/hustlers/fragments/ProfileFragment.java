@@ -73,16 +73,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void update(View view) {
-
-        /*Map<String, Object> userMap = new HashMap<>();
-                userMap.put("name",name);
-                userMap.put("surname",surname);*/
-
-                /*UserModel user = new UserModel();
-                user.setName(name);
-                user.setSurname(surname);*/
-
-
         btnUpdate.setOnClickListener(view1 -> {
             String name = et_name.getText().toString().trim();
             String surname = et_surname.getText().toString().trim();

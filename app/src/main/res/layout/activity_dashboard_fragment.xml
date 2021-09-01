@@ -16,7 +16,7 @@
         android:id="@+id/lo_search"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/jobs_rv"
+        android:id="@+id/home_jobs_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/lo_search"
