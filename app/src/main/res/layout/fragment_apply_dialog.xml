@@ -17,9 +17,66 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="stats"
+            app:title="Apply"
+            app:titleTextColor="@color/white"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:layout_below="@id/app_bar">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_weight="1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/document_preview_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="document here"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/pdf_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_pdf"
+            android:layout_marginTop="5dp"
             />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="choose"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="done"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

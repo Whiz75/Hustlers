@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.hustlers.R;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,6 +31,8 @@ public class ViewJobDialogFragment extends DialogFragment {
     private MaterialTextView qualification_tv;
     private MaterialTextView salary_tv;
     private MaterialTextView date_tv;
+
+    private MaterialButton btnApply;
 
     public ViewJobDialogFragment() {
         // Required empty public constructor
@@ -66,6 +69,7 @@ public class ViewJobDialogFragment extends DialogFragment {
         init(view);
         myToolbar(view);
         getJobDetails(view);
+        applyJob(view);
 
         return view;
     }
@@ -82,6 +86,8 @@ public class ViewJobDialogFragment extends DialogFragment {
         qualification_tv = view.findViewById(R.id.job_role_tv);
         salary_tv = view.findViewById(R.id.job_role_tv);
         date_tv = view.findViewById(R.id.job_role_tv);
+
+        btnApply = view.findViewById(R.id.btn_apply);
     }
 
     private void myToolbar(ViewGroup view) {
@@ -115,11 +121,24 @@ public class ViewJobDialogFragment extends DialogFragment {
                         qualification_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_qualification")).toString());
                         salary_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_salary")).toString());
                         date_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_date")).toString());
+
                     }else {
                         Toast.makeText(getContext(),"There's no such record!",Toast.LENGTH_LONG).show();
                     }
                 }).addOnFailureListener(e ->
                     Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show());
+    }
+
+    private void applyJob(ViewGroup view){
+        btnApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),key,Toast.LENGTH_LONG).show();
+
+                applyDialogFragment dlg = new applyDialogFragment(key);
+                dlg.show(getChildFragmentManager().beginTransaction(),"GO TO APPLY JOB");
+            }
+        });
     }
 
 }
