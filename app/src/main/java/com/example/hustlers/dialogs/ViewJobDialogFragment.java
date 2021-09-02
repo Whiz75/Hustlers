@@ -41,9 +41,13 @@ public class ViewJobDialogFragment extends DialogFragment {
     }
 
     String key;
+    String title;
+    String date;
 
-    public ViewJobDialogFragment(String key) {
+    public ViewJobDialogFragment(String key, String title, String date) {
         this.key = key;
+        this.title = title;
+        this.date = date;
     }
 
     @Override
@@ -58,7 +62,7 @@ public class ViewJobDialogFragment extends DialogFragment {
 
         Objects.requireNonNull(getDialog())
                 .getWindow()
-                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
@@ -128,7 +132,7 @@ public class ViewJobDialogFragment extends DialogFragment {
             Toast.makeText(getContext(),key,Toast.LENGTH_LONG).show();
 
             //display apply dialog
-            applyDialogFragment dlg = new applyDialogFragment(key);
+            applyDialogFragment dlg = new applyDialogFragment(key,title,date);
             dlg.show(getChildFragmentManager().beginTransaction(),"GO TO APPLY JOB");
         });
     }

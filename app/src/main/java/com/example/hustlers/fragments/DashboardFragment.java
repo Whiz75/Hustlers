@@ -12,11 +12,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hustlers.R;
 import com.example.hustlers.adapters.JobsAdapter;
 import com.example.hustlers.dialogs.ViewJobDialogFragment;
 import com.example.hustlers.models.JobModel;
+import com.google.android.gms.common.data.DataHolder;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,6 +32,8 @@ import java.util.List;
 public class DashboardFragment extends Fragment implements JobsAdapter.ClickListener {
 
     private RecyclerView rv;
+    private TextInputEditText et_search;
+
     ViewGroup dashboardViewGroup;
 
     private List<JobModel> list = new ArrayList<>();
@@ -38,7 +43,7 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         dashboardViewGroup =(ViewGroup)inflater.inflate(R.layout.activity_dashboard_fragment,container,false);
-        //initBinding(dashboardViewGroup);
+        initBinding(dashboardViewGroup);
         getAllJobs(dashboardViewGroup);
 
         return dashboardViewGroup;
@@ -51,6 +56,8 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
 
 
     private void initBinding(ViewGroup view) {
+
+        et_search =view.findViewById(R.id.et_search);
     }
 
     private void getAllJobs(ViewGroup view)
@@ -87,10 +94,13 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
                     }
                 });
     }
+    private void searchJobs(ViewGroup view){
+    }
+
 
     @Override
-    public void viewJob(String pos) {
-        ViewJobDialogFragment fragment = new ViewJobDialogFragment(pos);
+    public void viewJob(String pos, String title, String date) {
+        ViewJobDialogFragment fragment = new ViewJobDialogFragment(pos, title, date);
         fragment.show(getChildFragmentManager().beginTransaction(),"VIEW FULL JOB DETAILS");
     }
 }

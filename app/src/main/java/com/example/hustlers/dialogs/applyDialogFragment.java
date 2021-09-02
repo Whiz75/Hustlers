@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -21,13 +22,19 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.hustlers.R;
 import com.example.hustlers.models.ApplicationModel;
+import com.example.hustlers.models.JobModel;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,9 +59,13 @@ public class applyDialogFragment extends DialogFragment {
     }
 
     String key;
+    String title;
+    String date;
 
-    public applyDialogFragment(String key) {
+    public applyDialogFragment(String key, String title, String date) {
         this.key = key;
+        this.title = title;
+        this.date = date;
     }
 
     @Override
@@ -82,6 +93,8 @@ public class applyDialogFragment extends DialogFragment {
         myToolbar(view);
         requestStoragePermission(); //request storage permission
         choosePdf(view);
+
+        Toast.makeText(getContext(),key,Toast.LENGTH_LONG).show();
 
         return view;
     }
@@ -158,6 +171,9 @@ public class applyDialogFragment extends DialogFragment {
 
                 ApplicationModel applicationModel = new ApplicationModel();
                 applicationModel.setApplicantId(FirebaseAuth.getInstance().getUid());
+                applicationModel.setJob_key(key);
+                applicationModel.setJob_title(title);
+                applicationModel.setJob_date(date);
 
                 if (pdf_uri == null) {
                     preview_et.setError("Choose pdf document...");
@@ -167,16 +183,56 @@ public class applyDialogFragment extends DialogFragment {
                 FirebaseFirestore
                         .getInstance()
                         .collection("Applications")
+                        .document(key)
+                        .set(applicationModel)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+                                FirebaseStorage.
+                                        getInstance()
+                                        .getReference()
+                                        .child("Applications")
+                                        .child(key)
+                                        .putFile(pdf_uri)
+                                        .addOnSuccessListener(taskSnapshot -> {
+                                            progressDialog.dismiss();
+                                            taskSnapshot
+                                                    .getStorage()
+                                                    .getDownloadUrl()
+                                                    .addOnSuccessListener(uri ->
+                                                            FirebaseFirestore
+                                                            .getInstance()
+                                                            .collection("Applications")
+                                                            .document(key)
+                                                            .update("url", uri.toString()));
+
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                /*FirebaseFirestore
+                        .getInstance()
+                        .collection("Applications")
                         .add(applicationModel)
                         .addOnSuccessListener(documentReference -> {
 
-                            documentReference.update("job_key",documentReference.getId());
-
+                            documentReference.update("job_key",key);
                             FirebaseStorage.
                                     getInstance()
                                     .getReference()
                                     .child("Applications")
-                                    .child(documentReference.getId())
+                                    .child(key)
                                     .putFile(pdf_uri)
                                     .addOnSuccessListener(taskSnapshot -> {
                                         progressDialog.dismiss();
@@ -192,7 +248,7 @@ public class applyDialogFragment extends DialogFragment {
                                                         FirebaseFirestore
                                                                 .getInstance()
                                                                 .collection("Applications")
-                                                                .document(documentReference.getId())
+                                                                .document(key)
                                                                 .update("url", uri.toString());
                                                     }
                                                 });
@@ -200,58 +256,10 @@ public class applyDialogFragment extends DialogFragment {
                                     Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show());
                         })
                         .addOnFailureListener(e ->
-                        Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show());
-
+                                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show());*/
             }else {
                 Toast.makeText(getContext(),"Url empty!!!",Toast.LENGTH_LONG).show();
             }
         });
     }
-
-    private void apply(ViewGroup view){
-        //TextInputEditText preview_et = view.findViewById(R.id.document_preview_et);
-        btnSubmit = view.findViewById(R.id.btn_submit);
-
-        btnSubmit.setOnClickListener(view1 -> {
-            Toast.makeText(getContext(), key, Toast.LENGTH_SHORT).show();
-
-            ApplicationModel applicationModel = new ApplicationModel();
-            applicationModel.setApplicantId(FirebaseAuth.getInstance().getUid());
-
-            if (pdf_uri == null) {
-                preview_et.setError("Choose pdf document...");
-                return;
-            }
-
-            FirebaseFirestore
-                    .getInstance()
-                    .collection("Applications")
-                    .add(applicationModel)
-                    .addOnSuccessListener(documentReference -> {
-
-                        documentReference.update("job_key",documentReference.getId());
-
-                        FirebaseStorage.getInstance()
-                                .getReference()
-                                .child("Applications")
-                                .child(documentReference.getId())
-                                .putFile(pdf_uri)
-                                .addOnSuccessListener(taskSnapshot ->
-                                        taskSnapshot
-                                                .getStorage()
-                                                .getDownloadUrl()
-                                                .addOnSuccessListener(uri ->
-                                                        FirebaseFirestore
-                                                                .getInstance()
-                                                                .collection("Applications")
-                                                                .document(documentReference.getId())
-                                                                .update("url", uri.toString())));
-                    }).addOnCompleteListener(task ->
-                    Toast.makeText(getContext(), "Picture uploaded successful...",Toast.LENGTH_LONG).show())
-                    .addOnFailureListener(e ->
-                            Toast.makeText(getContext(), e.getMessage(),Toast.LENGTH_LONG).show());
-
-        });
-    }
-
 }

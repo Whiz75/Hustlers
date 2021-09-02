@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hustlers.R;
 import com.example.hustlers.models.JobModel;
+import com.google.android.gms.common.data.DataHolder;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
 
     private Context mContext;
     private List<JobModel> mList = new ArrayList<>();
+
+    private List<DataHolder> mDataHolder = new ArrayList<>();
+
     private ClickListener clickListener;
 
     public JobsAdapter(Context context, List<JobModel> list, ClickListener clickListener) {
@@ -80,12 +84,17 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
             JobModel model = mList.get(getAdapterPosition());
 
             if (view.getId() == view_job.getId()) {
-                clickListener.viewJob(model.getJob_id());
+                clickListener.viewJob(model.getJob_id(),model.getJob_description(),model.getJob_date());
             }
         }
     }
 
     public interface ClickListener {
-        void viewJob(String pos);
+        void viewJob(String pos, String title, String date);
+    }
+
+    public void updateList(List<DataHolder> list){
+        mDataHolder = list;
+        notifyDataSetChanged();
     }
 }

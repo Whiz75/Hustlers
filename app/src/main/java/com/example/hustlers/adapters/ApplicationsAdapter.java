@@ -39,12 +39,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapter.ViewHolder> {
 
-    private final List<JobModel> postList;
+    private final List<ApplicationModel> postList;
     private final Context context;
     private FragmentManager fm;
     private final ClickListener listener1;
 
-    public ApplicationsAdapter(Context context, List<JobModel> postsList, ClickListener listener1) {
+    public ApplicationsAdapter(Context context, List<ApplicationModel> postsList, ClickListener listener1) {
         this.postList = postsList;
         this.context = context;
         this.listener1 = listener1;
@@ -64,9 +64,9 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        JobModel jobs = postList.get(position);
+        ApplicationModel jobs = postList.get(position);
 
-        holder.job_title_tv.setText(jobs.getJob_location());
+        holder.job_title_tv.setText(jobs.getJob_title());
         holder.job_date_tv.setText(jobs.getJob_date());
 
     }
@@ -83,6 +83,7 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
 
         private MaterialTextView job_title_tv;
         private MaterialTextView job_date_tv;
+
         private MaterialButton btnRemove;
 
         public ViewHolder(@NonNull View itemView) {
@@ -101,10 +102,20 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
         @Override
         public void onClick(View view) {
 
-            JobModel j = postList.get(getAdapterPosition());
-
+            ApplicationModel j = postList.get(getAdapterPosition());
             if (view.getId() == btnRemove.getId()){
                 listener1.DeleteJobClick(getAdapterPosition());
+
+                try {
+                    FirebaseFirestore
+                            .getInstance()
+                            .collection("Applications")
+                            .document(j.getJob_key())
+                            .delete();
+                    Toast.makeText(view.getContext(), "Application deleted!!!", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

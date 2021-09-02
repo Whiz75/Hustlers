@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.hustlers.R;
 import com.example.hustlers.adapters.ApplicationsAdapter;
 import com.example.hustlers.adapters.JobsAdapter;
+import com.example.hustlers.models.ApplicationModel;
 import com.example.hustlers.models.JobModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +34,7 @@ public class JobsFragment extends Fragment implements JobsAdapter.ClickListener,
 
     ViewGroup jobViewGroup;
 
-    private List<JobModel> list = new ArrayList<>();
+    private List<ApplicationModel> list = new ArrayList<>();
 
     @Nullable
     @Override
@@ -67,11 +68,11 @@ public class JobsFragment extends Fragment implements JobsAdapter.ClickListener,
                         for (DocumentChange dc: value.getDocumentChanges()){
                             switch (dc.getType()){
                                 case ADDED:
-                                    list.add(dc.getDocument().toObject(JobModel.class));
+                                    list.add(dc.getDocument().toObject(ApplicationModel.class));
                                     adapter.notifyDataSetChanged();
                                     break;
                                 case MODIFIED:
-                                    list.add(dc.getNewIndex(), dc.getDocument().toObject(JobModel.class));
+                                    list.add(dc.getNewIndex(), dc.getDocument().toObject(ApplicationModel.class));
                                     adapter.notifyDataSetChanged();
                                     break;
                                 case REMOVED:
@@ -85,13 +86,14 @@ public class JobsFragment extends Fragment implements JobsAdapter.ClickListener,
                 });
     }
 
+
     @Override
-    public void viewJob(String pos) {
+    public void DeleteJobClick(int pos) {
 
     }
 
     @Override
-    public void DeleteJobClick(int pos) {
+    public void viewJob(String pos, String title, String date) {
 
     }
 }
