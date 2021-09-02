@@ -54,7 +54,6 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
         super.onCreate(savedInstanceState);
     }
 
-
     private void initBinding(ViewGroup view) {
 
         et_search =view.findViewById(R.id.et_search);
@@ -94,9 +93,6 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
                     }
                 });
     }
-    private void searchJobs(ViewGroup view){
-    }
-
 
     @Override
     public void viewJob(String pos, String title, String date) {
