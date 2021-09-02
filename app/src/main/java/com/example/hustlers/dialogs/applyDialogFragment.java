@@ -211,7 +211,8 @@ public class applyDialogFragment extends DialogFragment {
                                         }).addOnFailureListener(e ->
                                         Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show());
                             }
-                        }).addOnFailureListener(e -> Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show());
+                        }).addOnFailureListener(e ->
+                        Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show());
 
                 /*FirebaseFirestore
                         .getInstance()
