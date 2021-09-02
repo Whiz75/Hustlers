@@ -12,12 +12,15 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.hustlers.R;
 
+import com.example.hustlers.models.JobModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ViewJobDialogFragment extends DialogFragment {
@@ -33,6 +36,8 @@ public class ViewJobDialogFragment extends DialogFragment {
     private MaterialTextView date_tv;
 
     private MaterialButton btnApply;
+
+    List<JobModel> mList = new ArrayList<>();
 
     public ViewJobDialogFragment() {
         // Required empty public constructor
@@ -106,6 +111,7 @@ public class ViewJobDialogFragment extends DialogFragment {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot != null) {
+
                         /*String role = documentSnapshot.get("job_role").toString();
                         String description = documentSnapshot.get("job_description").toString();
                         String experience = documentSnapshot.get("job_experiences").toString();
@@ -119,8 +125,8 @@ public class ViewJobDialogFragment extends DialogFragment {
                         experience_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_experiences")).toString());
                         location_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_location")).toString());
                         qualification_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_qualification")).toString());
-                        salary_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_salary")).toString());
                         date_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_date")).toString());
+                        salary_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_salary")).toString());
 
                     }else {
                         Toast.makeText(getContext(),"There's no such record!",Toast.LENGTH_LONG).show();
