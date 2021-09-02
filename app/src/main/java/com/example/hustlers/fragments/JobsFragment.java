@@ -91,19 +91,7 @@ public class JobsFragment extends Fragment implements JobsAdapter.ClickListener,
     }
 
     @Override
-    public void DeleteJobClick(String pos) {
+    public void DeleteJobClick(int pos) {
 
-        try {
-            FirebaseFirestore
-                    .getInstance()
-                    .collection("Applications")
-                    .document(pos)
-                    .delete();
-
-            Toast.makeText(getContext(),"Deleted...!",Toast.LENGTH_LONG).show();
-
-        }catch (Exception e) {
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
     }
 }

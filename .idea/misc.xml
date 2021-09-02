@@ -7,12 +7,14 @@
         <entry key="..\:/Android/Hustlers/app/src/main/res/drawable/search_bg_style.xml" value="0.20260416666666667" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/activity_dashboard_fragment.xml" value="0.18645833333333334" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/activity_jobs_fragment.xml" value="0.18645833333333334" />
+        <entry key="..\:/Android/Hustlers/app/src/main/res/layout/activity_login_signup.xml" value="0.18645833333333334" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/activity_profile_fragment.xml" value="0.22" />
-        <entry key="..\:/Android/Hustlers/app/src/main/res/layout/application_item_row.xml" value="0.22" />
+        <entry key="..\:/Android/Hustlers/app/src/main/res/layout/application_item_row.xml" value="0.25" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/dialog_add_job.xml" value="0.18645833333333334" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/fragment_apply_dialog.xml" value="0.18645833333333334" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/fragment_login.xml" value="0.17967145790554415" />
+        <entry key="..\:/Android/Hustlers/app/src/main/res/layout/fragment_recover_password_dialog.xml" value="0.18645833333333334" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/fragment_sign_up.xml" value="0.18645833333333334" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/fragment_view_job_dialog.xml" value="0.18645833333333334" />
         <entry key="..\:/Android/Hustlers/app/src/main/res/layout/single_job_view.xml" value="0.18645833333333334" />

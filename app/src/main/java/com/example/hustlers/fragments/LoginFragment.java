@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.example.hustlers.R;
 import com.example.hustlers.activities.MainActivity;
+import com.example.hustlers.dialogs.ResetPasswordDialogFragment;
 import com.example.hustlers.interfaces.FragmentClickInterface;
 import com.example.hustlers.models.UserModel;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,6 +31,7 @@ public class LoginFragment extends Fragment {
 
     private TextInputEditText email_txt, password_txt;
     MaterialButton btn_sign_up, btn_login;
+    MaterialButton btn_reset_pass;
     Context context;
 
     public LoginFragment() {
@@ -59,12 +61,12 @@ public class LoginFragment extends Fragment {
         init(viewGroup);
         GoToSignUp(viewGroup);
         GoToMainActivity(viewGroup);
+        resetPassword(viewGroup);
 
         return viewGroup;
     }
 
-    private void init(ViewGroup view)
-    {
+    private void init(ViewGroup view) {
         email_txt = view.findViewById(R.id.input_email);
         password_txt = view.findViewById(R.id.input_password);
 
@@ -72,16 +74,14 @@ public class LoginFragment extends Fragment {
         btn_login = view.findViewById(R.id.login_button);
     }
 
-    private void GoToSignUp(ViewGroup view)
-    {
+    private void GoToSignUp(ViewGroup view) {
         btn_sign_up.setOnClickListener(v -> {
             context = view.getContext();
             clickInterface.BtnSignupClick();
         });
     }
 
-    private void GoToMainActivity(ViewGroup view)
-    {
+    private void GoToMainActivity(ViewGroup view) {
         btn_login.setOnClickListener(v -> {
             context = view.getContext();
             Toast.makeText(getActivity(), "You clicked this", Toast.LENGTH_LONG).show();
@@ -89,14 +89,11 @@ public class LoginFragment extends Fragment {
             String email = Objects.requireNonNull(email_txt.getText()).toString().trim();
             String password = Objects.requireNonNull(password_txt.getText()).toString().trim();
 
-            if (TextUtils.isEmpty(email))
-            {
+            if (TextUtils.isEmpty(email)) {
                 email_txt.setError( "Email can not be empty");
-            }else if (TextUtils.isEmpty(password))
-            {
+            }else if (TextUtils.isEmpty(password)) {
                 password_txt.setError( "Password can not be empty");
-            }else
-            {
+            }else {
                 FirebaseAuth
                         .getInstance()
                         .signInWithEmailAndPassword(email,password)
@@ -112,6 +109,15 @@ public class LoginFragment extends Fragment {
                 user.setName(name);
                 user.setSurname(surname);*/
             }
+        });
+    }
+
+    private void resetPassword(ViewGroup view){
+        btn_reset_pass = view.findViewById(R.id.btn_password_recover);
+
+        btn_reset_pass.setOnClickListener(view1 -> {
+            ResetPasswordDialogFragment fragment = new ResetPasswordDialogFragment();
+            fragment.show(getChildFragmentManager().beginTransaction(),"PASSWORD RESET");
         });
     }
 

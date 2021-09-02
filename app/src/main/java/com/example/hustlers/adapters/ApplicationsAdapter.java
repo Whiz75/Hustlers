@@ -94,6 +94,7 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
             job_date_tv = itemView.findViewById(R.id.tv_job_date);
             btnRemove = itemView.findViewById(R.id.remove_application_btn);
 
+            //on click
             btnRemove.setOnClickListener(this);
         }
 
@@ -103,7 +104,7 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
             JobModel j = postList.get(getAdapterPosition());
 
             if (view.getId() == btnRemove.getId()){
-                listener1.DeleteJobClick(j.getJob_id());
+                listener1.DeleteJobClick(getAdapterPosition());
             }
         }
     }
@@ -143,9 +144,8 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationsAdapte
                 });
     }
 
-    public interface ClickListener
-    {
+    public interface ClickListener {
         //void clickedLikes(int pos);
-        void DeleteJobClick(String pos);
+        void DeleteJobClick(int pos);
     }
 }

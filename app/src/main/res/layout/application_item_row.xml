@@ -21,7 +21,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        app:cardCornerRadius="8dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,17 +32,18 @@
 
             <LinearLayout
                 android:id="@+id/linear_parent_layout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
 
                 <LinearLayout
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.textview.MaterialTextView
+                    <!--<com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
@@ -49,9 +52,12 @@
                         android:textColor="@color/gray"
                         android:textStyle="bold"
                         android:textSize="24sp"
-                        />
+                        />-->
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:drawableLeft="@drawable/ic_work"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/midnight_blue"
                         android:id="@+id/tv_job_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -60,11 +66,21 @@
                         android:text="Software Eng"
                         android:textColor="@color/gray"
                         android:textStyle="bold"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
+
                         />
+
+
+
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_gray"/>
+
                 <LinearLayout
+                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -85,35 +101,49 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         android:layout_marginStart="5dp"
-                        android:text="Software Eng"
+                        android:text="11-9-2921"
                         android:textColor="@color/gray"
                         android:textStyle="bold"
                         />
+
                 </LinearLayout>
             </LinearLayout>
 
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@mipmap/ic_pending"
-                android:layout_alignParentEnd="true"
-                android:padding="5dp"
-                android:layout_centerVertical="true"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/remove_application_btn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="90dp"
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_below="@+id/linear_parent_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linear_parent_layout"
-                android:layout_marginStart="12dp"
-                android:text="remove"
-                android:textSize="14sp"
-                android:textColor="@color/gray"
-                app:strokeColor="@color/red"
-                app:strokeWidth="1dp" />
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_weight="1"
+                    android:id="@+id/remove_application_btn"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="6dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linear_parent_layout"
+                    android:layout_marginStart="12dp"
+                    android:text="remove"
+                    android:textColor="@color/gray"
+                    app:strokeColor="@color/red"
+                    app:strokeWidth="1dp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:srcCompat="@mipmap/ic_pending"
+                    android:layout_alignParentEnd="true"
+                    android:padding="5dp"
+                    android:layout_centerVertical="true"
+                    />
+
+
+            </LinearLayout>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
