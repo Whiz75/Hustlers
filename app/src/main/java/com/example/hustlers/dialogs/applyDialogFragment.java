@@ -196,6 +196,7 @@ public class applyDialogFragment extends DialogFragment {
                                         .child(key)
                                         .putFile(pdf_uri)
                                         .addOnSuccessListener(taskSnapshot -> {
+
                                             progressDialog.dismiss();
                                             taskSnapshot
                                                     .getStorage()
@@ -207,19 +208,10 @@ public class applyDialogFragment extends DialogFragment {
                                                             .document(key)
                                                             .update("url", uri.toString()));
 
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                });
+                                        }).addOnFailureListener(e ->
+                                        Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show());
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                        }).addOnFailureListener(e -> Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show());
 
                 /*FirebaseFirestore
                         .getInstance()
