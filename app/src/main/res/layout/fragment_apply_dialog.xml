@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             app:title="Apply"
             app:titleTextColor="@color/white"
+            app:navigationIconTint="@color/white"
             />
     </com.google.android.material.appbar.AppBarLayout>
 
