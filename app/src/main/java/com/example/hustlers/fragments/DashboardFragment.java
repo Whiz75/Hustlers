@@ -65,26 +65,23 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
         FirebaseFirestore
                 .getInstance()
                 .collection("Jobs")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (value != null) {
-                            for (DocumentChange dc: value.getDocumentChanges()){
-                                switch (dc.getType()){
-                                    case ADDED:
-                                        list.add(dc.getDocument().toObject(JobModel.class));
-                                        adapter.notifyDataSetChanged();
-                                        break;
-                                    case MODIFIED:
-                                        list.add(dc.getNewIndex(), dc.getDocument().toObject(JobModel.class));
-                                        adapter.notifyDataSetChanged();
-                                        break;
-                                    case REMOVED:
-                                        //to remove item
-                                        list.remove(dc.getOldIndex());
-                                        adapter.notifyDataSetChanged();
-                                        break;
-                                }
+                .addSnapshotListener((value, error) -> {
+                    if (value != null) {
+                        for (DocumentChange dc: value.getDocumentChanges()){
+                            switch (dc.getType()){
+                                case ADDED:
+                                    list.add(dc.getDocument().toObject(JobModel.class));
+                                    adapter.notifyDataSetChanged();
+                                    break;
+                                case MODIFIED:
+                                    list.add(dc.getNewIndex(), dc.getDocument().toObject(JobModel.class));
+                                    adapter.notifyDataSetChanged();
+                                    break;
+                                case REMOVED:
+                                    //to remove item
+                                    list.remove(dc.getOldIndex());
+                                    adapter.notifyDataSetChanged();
+                                    break;
                             }
                         }
                     }

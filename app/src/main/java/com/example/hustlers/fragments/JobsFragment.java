@@ -14,8 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hustlers.R;
+import com.example.hustlers.adapters.ApplicationsAdapter;
 import com.example.hustlers.adapters.JobsAdapter;
 import com.example.hustlers.models.JobModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -26,7 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobsFragment extends Fragment implements JobsAdapter.ClickListener {
+public class JobsFragment extends Fragment implements JobsAdapter.ClickListener, ApplicationsAdapter.ClickListener {
 
     ViewGroup jobViewGroup;
 
@@ -36,7 +39,7 @@ public class JobsFragment extends Fragment implements JobsAdapter.ClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         jobViewGroup =(ViewGroup) inflater.inflate(R.layout.activity_jobs_fragment,container,false);
-        //getJobs(jobViewGroup);
+        getJobs(jobViewGroup);
 
         return jobViewGroup;
     }
@@ -53,32 +56,29 @@ public class JobsFragment extends Fragment implements JobsAdapter.ClickListener 
 
         RecyclerView recyclerView = view.findViewById(R.id.jobs_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        final JobsAdapter adapter = new JobsAdapter( context,list,this);
+        final ApplicationsAdapter adapter = new ApplicationsAdapter( context,list,this);
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore
                 .getInstance()
-                .collection("Jobs")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (value != null) {
-                            for (DocumentChange dc: value.getDocumentChanges()){
-                                switch (dc.getType()){
-                                    case ADDED:
-                                        list.add(dc.getDocument().toObject(JobModel.class));
-                                        adapter.notifyDataSetChanged();
-                                        break;
-                                    case MODIFIED:
-                                        list.add(dc.getNewIndex(), dc.getDocument().toObject(JobModel.class));
-                                        adapter.notifyDataSetChanged();
-                                        break;
-                                    case REMOVED:
-                                        //to remove item
-                                        list.remove(dc.getOldIndex());
-                                        adapter.notifyDataSetChanged();
-                                        break;
-                                }
+                .collection("Applications")
+                .addSnapshotListener((value, error) -> {
+                    if (value != null) {
+                        for (DocumentChange dc: value.getDocumentChanges()){
+                            switch (dc.getType()){
+                                case ADDED:
+                                    list.add(dc.getDocument().toObject(JobModel.class));
+                                    adapter.notifyDataSetChanged();
+                                    break;
+                                case MODIFIED:
+                                    list.add(dc.getNewIndex(), dc.getDocument().toObject(JobModel.class));
+                                    adapter.notifyDataSetChanged();
+                                    break;
+                                case REMOVED:
+                                    //to remove item
+                                    list.remove(dc.getOldIndex());
+                                    adapter.notifyDataSetChanged();
+                                    break;
                             }
                         }
                     }
@@ -88,5 +88,22 @@ public class JobsFragment extends Fragment implements JobsAdapter.ClickListener 
     @Override
     public void viewJob(String pos) {
 
+    }
+
+    @Override
+    public void DeleteJobClick(String pos) {
+
+        try {
+            FirebaseFirestore
+                    .getInstance()
+                    .collection("Applications")
+                    .document(pos)
+                    .delete();
+
+            Toast.makeText(getContext(),"Deleted...!",Toast.LENGTH_LONG).show();
+
+        }catch (Exception e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -37,7 +37,6 @@ public class applyDialogFragment extends DialogFragment {
 
     private MaterialToolbar toolbar;
     private TextInputEditText preview_et;
-    private ImageView pdf_image;
     private MaterialButton btnSubmit;
     private MaterialButton btnUpload;
 
@@ -83,15 +82,11 @@ public class applyDialogFragment extends DialogFragment {
         myToolbar(view);
         requestStoragePermission(); //request storage permission
         choosePdf(view);
-        //apply(view);
 
         return view;
     }
 
-    private void init(ViewGroup view)
-    {
-        pdf_image.setVisibility(View.GONE);
-
+    private void init(ViewGroup view) {
         toolbar = view.findViewById(R.id.tool_bar);
         preview_et = view.findViewById(R.id.document_preview_et);
         btnSubmit = view.findViewById(R.id.btn_submit);
@@ -128,9 +123,6 @@ public class applyDialogFragment extends DialogFragment {
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Document"), PICK_PDF_REQUEST);
 
-            if (pdf_uri != null){
-                pdf_image.setVisibility(View.VISIBLE);
-            }
         });
     }
 
@@ -206,7 +198,8 @@ public class applyDialogFragment extends DialogFragment {
                                                 });
                                     }).addOnFailureListener(e ->
                                     Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show());
-                        }).addOnFailureListener(e ->
+                        })
+                        .addOnFailureListener(e ->
                         Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show());
 
             }else {

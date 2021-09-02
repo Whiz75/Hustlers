@@ -12,21 +12,18 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.hustlers.R;
 
-import com.example.hustlers.models.JobModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class ViewJobDialogFragment extends DialogFragment {
 
     private MaterialToolbar toolbar;
-    private FirebaseAnalytics analytics;
+
     private MaterialTextView role_tv ;
     private MaterialTextView description_tv;
     private MaterialTextView experience_tv;
@@ -37,7 +34,7 @@ public class ViewJobDialogFragment extends DialogFragment {
 
     private MaterialButton btnApply;
 
-    List<JobModel> mList = new ArrayList<>();
+    //List<JobModel> mList = new ArrayList<>();
 
     public ViewJobDialogFragment() {
         // Required empty public constructor
@@ -79,9 +76,7 @@ public class ViewJobDialogFragment extends DialogFragment {
         return view;
     }
 
-    @SuppressLint("CutPasteId")
-    private void init(ViewGroup view)
-    {
+    private void init(ViewGroup view) {
         toolbar = view.findViewById(R.id.tool_bar);
 
         role_tv = view.findViewById(R.id.job_role_tv);
@@ -101,6 +96,7 @@ public class ViewJobDialogFragment extends DialogFragment {
     }
 
     private void getJobDetails(ViewGroup view) {
+
         Context context = view.getContext();
         Toast.makeText(getContext(),key,Toast.LENGTH_LONG).show();
 
@@ -110,15 +106,7 @@ public class ViewJobDialogFragment extends DialogFragment {
                 .document(key)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot != null) {
-
-                        /*String role = documentSnapshot.get("job_role").toString();
-                        String description = documentSnapshot.get("job_description").toString();
-                        String experience = documentSnapshot.get("job_experiences").toString();
-                        String location = documentSnapshot.get("job_location").toString();
-                        String qualification = documentSnapshot.get("job_qualification").toString();
-                        String salary = documentSnapshot.get("job_salary").toString();
-                        String date = documentSnapshot.get("job_date").toString();*/
+                    if (documentSnapshot.exists()) {
 
                         role_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_role")).toString());
                         description_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_description")).toString());
@@ -136,14 +124,12 @@ public class ViewJobDialogFragment extends DialogFragment {
     }
 
     private void applyJob(ViewGroup view){
-        btnApply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(),key,Toast.LENGTH_LONG).show();
+        btnApply.setOnClickListener(view1 -> {
+            Toast.makeText(getContext(),key,Toast.LENGTH_LONG).show();
 
-                applyDialogFragment dlg = new applyDialogFragment(key);
-                dlg.show(getChildFragmentManager().beginTransaction(),"GO TO APPLY JOB");
-            }
+            //display apply dialog
+            applyDialogFragment dlg = new applyDialogFragment(key);
+            dlg.show(getChildFragmentManager().beginTransaction(),"GO TO APPLY JOB");
         });
     }
 
