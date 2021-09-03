@@ -81,16 +81,18 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
         @Override
         public void onClick(View view) {
 
-            JobModel model = mList.get(getAdapterPosition());
+            int position = getAdapterPosition();
+
+            JobModel model = mList.get(position);
 
             if (view.getId() == view_job.getId()) {
-                clickListener.viewJob(model.getJob_id(),model.getJob_description(),model.getJob_date());
+                clickListener.viewJob(position,model.getJob_id(),model.getJob_description(),model.getJob_date());
             }
         }
     }
 
     public interface ClickListener {
-        void viewJob(String pos, String title, String date);
+        void viewJob(int position,String pos, String title, String date);
     }
 
     public void updateList(List<DataHolder> list){

@@ -1,9 +1,8 @@
 package com.example.hustlers.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -16,19 +15,17 @@ import com.example.hustlers.R;
 import com.example.hustlers.activities.MainActivity;
 import com.example.hustlers.interfaces.FragmentClickInterface;
 import com.example.hustlers.models.UserModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Objects;
 
 public class SignUpFragment extends Fragment {
 
     private MaterialButton btn_backToLogin, btn_sign_up_user;
     private TextInputEditText name_txt, surname_txt, email_txt, password_txt, confirm_pass_txt;
-    private FirebaseAuth firebaseAuth;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -81,10 +78,13 @@ public class SignUpFragment extends Fragment {
 
     private void SignUp(ViewGroup view) {
 
+        Context context =view.getContext();
+
         btn_sign_up_user.setOnClickListener(view1 -> {
+
             try {
-                final String name = name_txt.getText().toString().trim();
-                final String lastName = surname_txt.getText().toString().trim();
+                final String name = Objects.requireNonNull(name_txt.getText()).toString().trim();
+                final String lastName = Objects.requireNonNull(surname_txt.getText()).toString().trim();
                 final String email = email_txt.getText().toString().trim();
                 final String password = password_txt.getText().toString().trim();
                 final String confirmPassword = confirm_pass_txt.getText().toString().trim();
@@ -124,7 +124,6 @@ public class SignUpFragment extends Fragment {
     }
 
     private boolean validate() {
-
         final String name = name_txt.getText().toString().trim();
         final String lastName = surname_txt.getText().toString().trim();
         final String email = email_txt.getText().toString().trim();
@@ -158,8 +157,9 @@ public class SignUpFragment extends Fragment {
             isValid = false;
         }
 
-        if (TextUtils.equals(password,confirmPassword)){
+        if (!TextUtils.equals(password,confirmPassword)){
             Toast.makeText(getContext(),"Passwords do not match!!!",Toast.LENGTH_LONG).show();
+            isValid = false;
         }
 
         return isValid;

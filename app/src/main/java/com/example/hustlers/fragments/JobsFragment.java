@@ -11,21 +11,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.hustlers.R;
 import com.example.hustlers.adapters.ApplicationsAdapter;
 import com.example.hustlers.adapters.JobsAdapter;
 import com.example.hustlers.models.ApplicationModel;
-import com.example.hustlers.models.JobModel;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +86,7 @@ public class JobsFragment extends Fragment implements JobsAdapter.ClickListener,
     }
 
     @Override
-    public void viewJob(String pos, String title, String date) {
+    public void viewJob(int position,String pos, String title, String date) {
 
     }
 }

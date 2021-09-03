@@ -5,13 +5,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.hustlers.R;
-import com.example.hustlers.dialogs.AddJobDialogFragment;
 import com.example.hustlers.fragments.DashboardFragment;
 import com.example.hustlers.fragments.JobsFragment;
 import com.example.hustlers.fragments.ProfileFragment;
@@ -48,63 +47,75 @@ public class MainActivity extends AppCompatActivity {
 
         tool_bar.setNavigationIcon(R.drawable.ic_menu);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frag_host,new DashboardFragment()).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frag_host,new DashboardFragment())
+                .commit();
+
         navigationBar.setItemSelected(R.id.bottom_nav_dashboard, true);
         tool_bar.setTitle("DASHBOARD");
         //call method
         listenToEvent();
     }
 
-    private void listenToEvent()
-    {
-        navigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int i) {
-                Fragment fragment = null;
+    @SuppressLint("NonConstantResourceId")
+    private void listenToEvent() {
+        navigationBar.setOnItemSelectedListener(i -> {
 
-                switch (i){
-                    case R.id.bottom_nav_dashboard:
-                        fragment = new DashboardFragment();
-                        tool_bar.setTitle("DASHBOARD");
-                        break;
-                    case R.id.bottom_nav_jobs:
-                        fragment = new JobsFragment();
-                        tool_bar.setTitle("JOBS");
-                        break;
-                    case R.id.bottom_nav_profile:
-                        fragment = new ProfileFragment();
-                        tool_bar.setTitle("PROFILE");
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + i);
-                }
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.frag_host,fragment).commit();
+            Fragment fragment = null;
+            switch (i){
+                case R.id.bottom_nav_dashboard:
+                    fragment = new DashboardFragment();
+                    tool_bar.setTitle("DASHBOARD");
+                    break;
+                case R.id.bottom_nav_jobs:
+                    fragment = new JobsFragment();
+                    tool_bar.setTitle("JOBS");
+                    break;
+                case R.id.bottom_nav_profile:
+                    fragment = new ProfileFragment();
+                    tool_bar.setTitle("PROFILE");
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + i);
             }
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frag_host,fragment)
+                    .commit();
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void navigationDrawer() {
         tool_bar.setNavigationIcon(R.drawable.ic_menu);
         tool_bar.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
         navigationView.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId())
-            {
+            switch (item.getItemId()) {
                 case R.id.nav_home:
-                    drawerLayout.closeDrawer(GravityCompat.END);
-                    Toast.makeText(getApplicationContext(), "you clicked home", Toast.LENGTH_LONG).show();
+                    drawerLayout.closeDrawers();
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.frag_host,new DashboardFragment())
+                            .commit();
+                    navigationBar.setItemSelected(R.id.bottom_nav_dashboard, true);
+                    tool_bar.setTitle("DASHBOARD");
                     break;
                 case R.id.nav_profile:
                     //call profile frag
-                    Toast.makeText(getApplicationContext(), "you clicked profile", Toast.LENGTH_LONG).show();
+                    drawerLayout.closeDrawers();
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.frag_host,new ProfileFragment())
+                            .commit();
+                    navigationBar.setItemSelected(R.id.bottom_nav_profile, true);
+                    tool_bar.setTitle("PROFILE");
                     break;
-                case R.id.nav_rate:
-                    Toast.makeText(getApplicationContext(), "you clicked rate", Toast.LENGTH_LONG).show();
-                    break;
-                case R.id.nav_share:
-                    Toast.makeText(getApplicationContext(), "you clicked share", Toast.LENGTH_LONG).show();
-                    break;
+
                 case R.id.nav_logout:
                     MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
                     builder.setTitle("LOGOUT");

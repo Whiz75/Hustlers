@@ -50,7 +50,7 @@
         </menu>
     </item>
 
-    <item android:title="Communicate"
+    <!--<item android:title="Communicate"
         tools:ignore="HardcodedText">
         <menu>
             <item
@@ -67,6 +67,6 @@
                 android:textSize="18sp"
                 />
         </menu>
-    </item>
+    </item>-->
 
 </menu>

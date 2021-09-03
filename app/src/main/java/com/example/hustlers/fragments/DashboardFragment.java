@@ -95,7 +95,7 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
     }
 
     @Override
-    public void viewJob(String pos, String title, String date) {
+    public void viewJob(int position, String pos, String title, String date) {
         ViewJobDialogFragment fragment = new ViewJobDialogFragment(pos, title, date);
         fragment.show(getChildFragmentManager().beginTransaction(),"VIEW FULL JOB DETAILS");
     }

@@ -148,16 +148,11 @@ public class applyDialogFragment extends DialogFragment {
             if (data.getData() != null) {
                 pdf_uri = data.getData();
                 UploadFile();
-            } else
+            } else{
                 Toast.makeText(getContext(), "NO FILE CHOSEN", Toast.LENGTH_SHORT).show();
-
+            }
         }
 
-    }
-
-    private String formatDate(Date dateObject) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-        return timeFormat.format(dateObject);
     }
 
     private void UploadFile() {
@@ -185,33 +180,29 @@ public class applyDialogFragment extends DialogFragment {
                         .collection("Applications")
                         .document(key)
                         .set(applicationModel)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
+                        .addOnSuccessListener(unused ->
 
                                 FirebaseStorage.
-                                        getInstance()
-                                        .getReference()
-                                        .child("Applications")
-                                        .child(key)
-                                        .putFile(pdf_uri)
-                                        .addOnSuccessListener(taskSnapshot -> {
+                                getInstance()
+                                .getReference()
+                                .child("Applications")
+                                .child(key)
+                                .putFile(pdf_uri)
+                                .addOnSuccessListener(taskSnapshot -> {
 
-                                            progressDialog.dismiss();
-                                            taskSnapshot
-                                                    .getStorage()
-                                                    .getDownloadUrl()
-                                                    .addOnSuccessListener(uri ->
-                                                            FirebaseFirestore
-                                                            .getInstance()
-                                                            .collection("Applications")
-                                                            .document(key)
-                                                            .update("url", uri.toString()));
+                                    progressDialog.dismiss();
+                                    taskSnapshot
+                                            .getStorage()
+                                            .getDownloadUrl()
+                                            .addOnSuccessListener(uri ->
+                                                    FirebaseFirestore
+                                                    .getInstance()
+                                                    .collection("Applications")
+                                                    .document(key)
+                                                    .update("url", uri.toString()));
 
-                                        }).addOnFailureListener(e ->
-                                        Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show());
-                            }
-                        }).addOnFailureListener(e ->
+                                }).addOnFailureListener(e ->
+                                Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show())).addOnFailureListener(e ->
                         Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show());
 
                 /*FirebaseFirestore

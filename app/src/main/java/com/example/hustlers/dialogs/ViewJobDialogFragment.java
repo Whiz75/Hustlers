@@ -12,12 +12,15 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.hustlers.R;
 
+import com.example.hustlers.models.JobModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ViewJobDialogFragment extends DialogFragment {
@@ -34,7 +37,7 @@ public class ViewJobDialogFragment extends DialogFragment {
 
     private MaterialButton btnApply;
 
-    //List<JobModel> mList = new ArrayList<>();
+    List<JobModel> mList = new ArrayList<>();
 
     public ViewJobDialogFragment() {
         // Required empty public constructor
@@ -43,6 +46,7 @@ public class ViewJobDialogFragment extends DialogFragment {
     String key;
     String title;
     String date;
+    int pos;
 
     public ViewJobDialogFragment(String key, String title, String date) {
         this.key = key;
