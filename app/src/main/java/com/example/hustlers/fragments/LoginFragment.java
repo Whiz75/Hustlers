@@ -89,27 +89,41 @@ public class LoginFragment extends Fragment {
             String email = Objects.requireNonNull(email_txt.getText()).toString().trim();
             String password = Objects.requireNonNull(password_txt.getText()).toString().trim();
 
-            if (TextUtils.isEmpty(email)) {
-                email_txt.setError( "Email can not be empty");
-            }else if (TextUtils.isEmpty(password)) {
-                password_txt.setError( "Password can not be empty");
-            }else {
-                FirebaseAuth
-                        .getInstance()
-                        .signInWithEmailAndPassword(email,password)
-                        .addOnSuccessListener(authResult -> {
-                            Toast.makeText(getContext(),"User login successful!",Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getActivity(), MainActivity.class);
-                            startActivity(intent);
-                        }).addOnFailureListener(e -> {
-                            Toast.makeText(getContext(), "User login failed!",Toast.LENGTH_LONG).show();
-                        });
-
-                /*UserModel user = new UserModel();
-                user.setName(name);
-                user.setSurname(surname);*/
+            if (!isValid()) {
+                return;
             }
+
+            FirebaseAuth
+                    .getInstance()
+                    .signInWithEmailAndPassword(email,password)
+                    .addOnSuccessListener(authResult -> {
+                        Toast.makeText(getContext(),"User login successful!",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                    }).addOnFailureListener(e -> {
+                Toast.makeText(getContext(), "User login failed!",Toast.LENGTH_LONG).show();
+            });
         });
+    }
+
+    private boolean isValid(){
+
+        String email = Objects.requireNonNull(email_txt.getText()).toString().trim();
+        String password = Objects.requireNonNull(password_txt.getText()).toString().trim();
+
+        boolean valid = true;
+
+        if (TextUtils.isEmpty(email)){
+            email_txt.setError( "Email can not be empty");
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(password)){
+            password_txt.setError( "Password can not be empty");
+            valid = false;
+        }
+
+        return valid;
     }
 
     private void resetPassword(ViewGroup view){

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "346704526554",
+    "project_id": "hustlers-admin-a5e22",
+    "storage_bucket": "hustlers-admin-a5e22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346704526554:android:2c5e903aef0c130c14f9e3",
+        "android_client_info": {
+          "package_name": "com.example.hustlers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346704526554-8qnt1m6uq3vhq89np0f32eidp4d40kds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXOaoXQqkhvIYZuNJeRsF0nw7EzcXhB90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346704526554-8qnt1m6uq3vhq89np0f32eidp4d40kds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346704526554:android:f4a0406d2aa0ff0014f9e3",
+        "android_client_info": {
+          "package_name": "com.example.hustlersadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346704526554-8qnt1m6uq3vhq89np0f32eidp4d40kds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXOaoXQqkhvIYZuNJeRsF0nw7EzcXhB90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346704526554-8qnt1m6uq3vhq89np0f32eidp4d40kds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

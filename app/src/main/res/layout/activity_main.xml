@@ -1,63 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    android:fitsSystemWindows="true"
+    android:id="@+id/drawer_layout"
+    tools:openDrawer="start">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/tool_bar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="HUSTLERS"
+                app:titleTextColor="@color/white"
+                app:navigationIconTint="@color/white"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
+            android:id="@+id/frag_host"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/app_bar"
+            android:layout_above="@id/bottom_nav_cv"/>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bottom_nav_cv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="HUSTLERS"
-            app:titleTextColor="@color/white"
-            app:navigationIconTint="@color/white"/>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <FrameLayout
-        android:id="@+id/frag_host"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/app_bar"
-        android:layout_above="@id/bottom_nav_cv"/>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/bottom_nav_cv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="3dp"
-        app:cardPreventCornerOverlap="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp">
-
-        <com.ismaeldivita.chipnavigation.ChipNavigationBar
-            android:id="@+id/bottom_nav"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
+            app:cardPreventCornerOverlap="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:elevation="8dp"
-            android:padding="5dp"
-            app:cnb_iconSize="24dp"
-            app:cnb_menuResource="@menu/bottom_nav_menu"
-            app:cnb_orientationMode="horizontal"
-            app:cnb_radius="8dp"
-            app:cnb_unselectedColor="#000"
-            app:cnb_badgeColor="@color/dodger_blue"
-            android:overScrollMode="never" />
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+            android:layout_marginBottom="5dp">
+
+            <com.ismaeldivita.chipnavigation.ChipNavigationBar
+                android:id="@+id/bottom_nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:elevation="8dp"
+                android:padding="5dp"
+                app:cnb_iconSize="24dp"
+                app:cnb_menuResource="@menu/bottom_nav_menu"
+                app:cnb_orientationMode="horizontal"
+                app:cnb_radius="8dp"
+                app:cnb_unselectedColor="#000"
+                app:cnb_badgeColor="@color/dodger_blue"
+                android:overScrollMode="never" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_drawer_menu" />
+</androidx.drawerlayout.widget.DrawerLayout>

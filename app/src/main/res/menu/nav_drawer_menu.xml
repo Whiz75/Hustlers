@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home"
+            android:textSize="18sp"
+            tools:ignore="HardcodedText" />
+
+        <!--<item
+            android:id="@+id/nav_cycle"
+            android:icon="@drawable/ic_directions_bike"
+            android:title="Cycling" />
+
+        <item
+            android:id="@+id/nav_bus"
+            android:icon="@drawable/ic_directions_bus"
+            android:title="Bus" />
+
+        <item
+            android:id="@+id/nav_plane"
+            android:icon="@drawable/ic_home"
+            android:title="Plane" />-->
+    </group>
+
+    <item android:title="Profile"
+        tools:ignore="HardcodedText">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/ic_account"
+                    android:title="Profile"
+                    android:textSize="18sp"
+                    />
+
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_logout"
+                    android:title="Logout"
+                    android:textSize="18sp"
+                    />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Communicate"
+        tools:ignore="HardcodedText">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_share"
+                android:title="Share"
+                android:textSize="18sp"
+              />
+
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/ic_share"
+                android:title="Rate Us"
+                android:textSize="18sp"
+                />
+        </menu>
+    </item>
+
+</menu>

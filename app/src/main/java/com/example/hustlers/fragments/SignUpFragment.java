@@ -80,6 +80,7 @@ public class SignUpFragment extends Fragment {
     }
 
     private void SignUp(ViewGroup view) {
+
         btn_sign_up_user.setOnClickListener(view1 -> {
             try {
                 final String name = name_txt.getText().toString().trim();
@@ -88,56 +89,36 @@ public class SignUpFragment extends Fragment {
                 final String password = password_txt.getText().toString().trim();
                 final String confirmPassword = confirm_pass_txt.getText().toString().trim();
 
+                if (!validate()) {
+                    return;
+                }
 
-                if (TextUtils.isEmpty(name)) {
-                    FirebaseAuth
-                            .getInstance()
-                            .createUserWithEmailAndPassword(email,password)
-                            .addOnSuccessListener(authResult -> {
+                FirebaseAuth
+                        .getInstance()
+                        .createUserWithEmailAndPassword(email,password)
+                        .addOnSuccessListener(authResult -> {
 
-                                UserModel user = new UserModel();
-                                user.setName(name);
-                                user.setSurname(lastName);
-                                user.setEmail(email);
+                            UserModel user = new UserModel();
+                            user.setName(name);
+                            user.setSurname(lastName);
+                            user.setEmail(email);
 
-                                FirebaseFirestore
-                                        .getInstance()
-                                        .collection("Users")
-                                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .set(user)
-                                        .addOnSuccessListener(unused -> {
-                                            Toast.makeText(getContext(),"User registered successfully!",Toast.LENGTH_LONG).show();
+                            FirebaseFirestore
+                                    .getInstance()
+                                    .collection("Users")
+                                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .set(user)
+                                    .addOnSuccessListener(unused -> {
+                                        Toast.makeText(getContext(),"User registered successfully!",Toast.LENGTH_LONG).show();
 
-                                            Intent intent = new Intent(getActivity(), MainActivity.class);
-                                            startActivity(intent);
-                                        });
+                                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                                        startActivity(intent);
+                                    });
                             }).addOnFailureListener(e -> {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
-                }else {
-                    Toast.makeText(getContext(),"Invalid",Toast.LENGTH_LONG).show();
-                }
             }catch (Exception e) {
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void SignUpUser(ViewGroup view) {
-
-        //initialize firebase auth object
-        btn_sign_up_user.setOnClickListener(v -> {
-
-            final String name = name_txt.getText().toString().trim();
-            final String lastName = surname_txt.getText().toString().trim();
-            final String email = email_txt.getText().toString().trim();
-            final String password = password_txt.getText().toString().trim();
-            final String confirmPassword = confirm_pass_txt.getText().toString().trim();
-
-            if (!validate()) {
-
-            }else {
-
             }
         });
     }
@@ -150,30 +131,37 @@ public class SignUpFragment extends Fragment {
         final String password = password_txt.getText().toString().trim();
         final String confirmPassword = confirm_pass_txt.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(name)){
+        boolean isValid = true;
+
+        if (TextUtils.isEmpty(name)){
             name_txt.setError("Please enter name");
-            return true;
+            isValid = false;
         }
 
-        if (!TextUtils.isEmpty(lastName)){
+        if (TextUtils.isEmpty(lastName)){
             name_txt.setError("Please enter surname");
-            return true;
+            isValid = false;
         }
 
-        if (!TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)){
             name_txt.setError("Please enter email");
-            return true;
+            isValid = false;
         }
 
-        if (!TextUtils.isEmpty(password)){
+        if (TextUtils.isEmpty(password)){
             name_txt.setError("Please enter password");
-            return true;
+            isValid = false;
         }
 
-        if (!TextUtils.isEmpty(confirmPassword)){
+        if (TextUtils.isEmpty(confirmPassword)){
             name_txt.setError("Please re-enter password");
-            return true;
+            isValid = false;
         }
-        return false;
+
+        if (TextUtils.equals(password,confirmPassword)){
+            Toast.makeText(getContext(),"Passwords do not match!!!",Toast.LENGTH_LONG).show();
+        }
+
+        return isValid;
     }
 }
