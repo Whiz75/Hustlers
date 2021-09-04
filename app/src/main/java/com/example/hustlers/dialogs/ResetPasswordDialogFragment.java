@@ -97,7 +97,7 @@ public class ResetPasswordDialogFragment extends DialogFragment {
             public void onClick(View view) {
 
                 try {
-                    String resetMail = Objects.requireNonNull(et_email.getText()).toString();
+                    String resetMail = Objects.requireNonNull(et_email.getText()).toString().trim();
                     if (resetMail.isEmpty()){
                         et_email.setError("Required field!");
                         return;

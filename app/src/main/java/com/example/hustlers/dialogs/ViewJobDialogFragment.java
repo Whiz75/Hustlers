@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.hustlers.R;
@@ -17,7 +18,10 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,12 +92,12 @@ public class ViewJobDialogFragment extends DialogFragment {
         toolbar = view.findViewById(R.id.tool_bar);
 
         role_tv = view.findViewById(R.id.job_role_tv);
-        description_tv = view.findViewById(R.id.job_role_tv);
-        experience_tv = view.findViewById(R.id.job_role_tv);
-        location_tv = view.findViewById(R.id.job_role_tv);
-        qualification_tv = view.findViewById(R.id.job_role_tv);
-        salary_tv = view.findViewById(R.id.job_role_tv);
-        date_tv = view.findViewById(R.id.job_role_tv);
+        description_tv = view.findViewById(R.id.job_description_tv);
+        experience_tv = view.findViewById(R.id.job_experience_tv);
+        location_tv = view.findViewById(R.id.job_location_tv);
+        qualification_tv = view.findViewById(R.id.job_qualification_tv);
+        salary_tv = view.findViewById(R.id.job_salary_tv);
+        date_tv = view.findViewById(R.id.job_closing_date_tv);
 
         btnApply = view.findViewById(R.id.btn_apply);
     }
@@ -112,23 +116,18 @@ public class ViewJobDialogFragment extends DialogFragment {
                 .getInstance()
                 .collection("Jobs")
                 .document(key)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
+                .addSnapshotListener((value, error) -> {
 
-                        role_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_role")).toString());
-                        description_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_description")).toString());
-                        experience_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_experiences")).toString());
-                        location_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_location")).toString());
-                        qualification_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_qualification")).toString());
-                        date_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_date")).toString());
-                        salary_tv.setText(Objects.requireNonNull(documentSnapshot.get("job_salary")).toString());
-
-                    }else {
-                        Toast.makeText(getContext(),"There's no such record!",Toast.LENGTH_LONG).show();
+                    if (value != null){
+                        description_tv.setText(value.get("job_description").toString());
+                        role_tv.setText(value.get("job_role").toString());
+                        experience_tv.setText(value.get("job_experiences").toString());
+                        location_tv.setText(value.get("job_location").toString());
+                        qualification_tv.setText(value.get("job_qualification").toString());
+                        salary_tv.setText("R"+value.get("job_salary").toString());
+                        date_tv.setText(value.get("job_date").toString());
                     }
-                }).addOnFailureListener(e ->
-                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show());
+                });
     }
 
     private void applyJob(ViewGroup view){

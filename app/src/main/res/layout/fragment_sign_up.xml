@@ -17,6 +17,28 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical">
 
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/coordinate_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/input_profile_Img"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_account" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/addImg_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    app:backgroundTint="@color/white"
+                    app:layout_anchor="@id/input_profile_Img"
+                    app:layout_anchorGravity="end|bottom"
+                    tools:ignore="ContentDescription" />
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             <!--password textinput Edittext-->
             <com.google.android.material.textfield.TextInputLayout
@@ -26,6 +48,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_below="@id/coordinate_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
                 <com.google.android.material.textfield.TextInputEditText

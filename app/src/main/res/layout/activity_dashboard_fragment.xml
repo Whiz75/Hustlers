@@ -16,8 +16,8 @@
         android:id="@+id/lo_search"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_search"
+        <EditText
+            android:id="@+id/et_searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="search job"
@@ -26,6 +26,7 @@
             app:cornerRadius="8dp"
             tools:ignore="HardcodedText,RtlHardcoded,TextFields"
             android:importantForAutofill="no" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView

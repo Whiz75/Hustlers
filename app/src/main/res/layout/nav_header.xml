@@ -18,19 +18,21 @@
         app:civ_border_width="2dp"
         app:civ_border_color="@color/black"/>
 
-    <com.google.android.material.textview.MaterialTextView
+    <!--<com.google.android.material.textview.MaterialTextView
         android:id="@+id/nav_usernames"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="KHOTSOKA SHANE"
         android:textStyle="bold"
         android:fontFamily="@font/bangers"
-        android:textSize="30sp" />
+        android:textSize="30sp" />-->
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CUSTOMER"
-        android:textSize="18sp"
+        android:text="Hustlers"
+        android:textAllCaps="true"
+        android:fontFamily="@font/bangers"
+        android:textSize="30sp"
         android:layout_marginBottom="10dp"/>
 </LinearLayout>

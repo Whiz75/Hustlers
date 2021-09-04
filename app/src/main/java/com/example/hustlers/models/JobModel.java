@@ -3,6 +3,7 @@ package com.example.hustlers.models;
 public class JobModel {
 
     String job_id;
+    String job_title;
     String job_experience;
     String job_description;
     String job_date;
@@ -15,7 +16,8 @@ public class JobModel {
     }
 
     public JobModel(String job_experience, String job_description, String job_date,
-                    String job_location, String job_qualification,String job_salary, String job_id) {
+                    String job_location, String job_qualification,String job_salary,
+                    String job_id, String job_title) {
         this.job_experience = job_experience;
         this.job_description = job_description;
         this.job_date = job_date;
@@ -23,6 +25,7 @@ public class JobModel {
         this.job_qualification = job_qualification;
         this.job_salary = job_salary;
         this.job_id = job_id;
+        this.job_title = job_title;
     }
 
     public String getJob_id() {
@@ -79,5 +82,13 @@ public class JobModel {
 
     public void setJob_salary(String job_salary) {
         this.job_salary = job_salary;
+    }
+
+    public String getJob_title() {
+        return job_title;
+    }
+
+    public void setJob_title(String job_title) {
+        this.job_title = job_title;
     }
 }

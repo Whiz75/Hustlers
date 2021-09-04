@@ -3,15 +3,19 @@ package com.example.hustlers.fragments;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.hustlers.R;
@@ -32,7 +36,8 @@ import java.util.List;
 public class DashboardFragment extends Fragment implements JobsAdapter.ClickListener {
 
     private RecyclerView rv;
-    private TextInputEditText et_search;
+    private EditText et_search;
+    private JobsAdapter adapter;
 
     ViewGroup dashboardViewGroup;
 
@@ -45,6 +50,7 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
         dashboardViewGroup =(ViewGroup)inflater.inflate(R.layout.activity_dashboard_fragment,container,false);
         initBinding(dashboardViewGroup);
         getAllJobs(dashboardViewGroup);
+        search();
 
         return dashboardViewGroup;
     }
@@ -55,8 +61,44 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
     }
 
     private void initBinding(ViewGroup view) {
+        et_search =view.findViewById(R.id.et_searchView);
+    }
 
-        et_search =view.findViewById(R.id.et_search);
+    private void search(){
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+    }
+
+    private void filter(String text) {
+        //new array list that will hold the filtered data
+        ArrayList<JobModel> filterdNames = new ArrayList<>();
+
+        //looping through existing elements
+        for (JobModel s : list) {
+            //if the existing elements contains the search input
+            if (s.getJob_title().contains(text.toLowerCase()) ||
+                    s.getJob_qualification().contains(text.toUpperCase())) {
+                //adding the element to filtered list
+                filterdNames.add(s);
+            }
+        }
+
+        //calling a method of the adapter class and passing the filtered list
+        adapter.filterList(filterdNames);
     }
 
     private void getAllJobs(ViewGroup view)
@@ -65,7 +107,7 @@ public class DashboardFragment extends Fragment implements JobsAdapter.ClickList
 
         RecyclerView recyclerView = view.findViewById(R.id.home_jobs_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        final JobsAdapter adapter = new JobsAdapter( context,list,this);
+        adapter = new JobsAdapter( context,list,this);
         recyclerView.setAdapter(adapter);
 
         FirebaseFirestore

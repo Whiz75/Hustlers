@@ -3,19 +3,29 @@ package com.example.hustlers.dialogs;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -28,6 +38,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -36,6 +47,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -44,8 +56,12 @@ public class applyDialogFragment extends DialogFragment {
 
     private MaterialToolbar toolbar;
     private TextInputEditText preview_et;
+    private MaterialTextView url_text;
+
     private MaterialButton btnSubmit;
     private MaterialButton btnUpload;
+
+    private ImageView pdfImage;
 
     private Uri pdf_uri = null;
 
@@ -101,11 +117,18 @@ public class applyDialogFragment extends DialogFragment {
 
     private void init(ViewGroup view) {
         toolbar = view.findViewById(R.id.tool_bar);
-        preview_et = view.findViewById(R.id.document_preview_et);
+        //preview_et = view.findViewById(R.id.document_preview_et);
+        url_text = view.findViewById(R.id.url_text);
+
+        pdfImage = view.findViewById(R.id.pdf_icon);
+        pdfImage.setVisibility(View.GONE);
+
         btnSubmit = view.findViewById(R.id.btn_submit);
     }
 
     private void myToolbar(ViewGroup view) {
+        Context context = view.getContext();
+
         toolbar.setNavigationIcon(R.drawable.ic_close);
         toolbar.setNavigationOnClickListener(v -> dismiss());
     }
@@ -126,6 +149,27 @@ public class applyDialogFragment extends DialogFragment {
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
 
+    ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+
+                        // your operation....
+                        pdf_uri = data.getData();
+
+                        //set the image to be visible
+                        pdfImage.setVisibility(View.VISIBLE);
+                        //call method to upload the Cv
+                        UploadFile();
+
+                        String path = pdf_uri.getPath();
+                        url_text.setText(path);
+                    }
+                }
+            });
 
     private void choosePdf(ViewGroup view){
         btnUpload = view.findViewById(R.id.btn_upload);
@@ -134,26 +178,41 @@ public class applyDialogFragment extends DialogFragment {
             Intent intent = new Intent();
             intent.setType("application/pdf");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Document"), PICK_PDF_REQUEST);
-
+            //startActivityForResult(Intent.createChooser(intent, "Select Document"), PICK_PDF_REQUEST);
+            launchSomeActivity.launch(intent);
         });
     }
 
     //test this here
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    /*@Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_PDF_REQUEST) {
 
-        if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            if (data.getData() != null) {
-                pdf_uri = data.getData();
-                UploadFile();
-            } else{
-                Toast.makeText(getContext(), "NO FILE CHOSEN", Toast.LENGTH_SHORT).show();
-            }
+            pdf_uri = data.getData();
+            UploadFile();
+
+            String path = data.getData().getPath();
+            url_text.setText(path);
+            *//*url_text.setText(data.getData().toString() + "===");
+            String scheme = pdf_uri.getScheme();
+            if (scheme.equals("file")) {
+                url_text.setText(pdf_uri.getLastPathSegment() + "File selected!");
+            } else if (scheme.equals("content")) {
+                String[] proj = {MediaStore.Images.Media.TITLE};
+                Cursor cursor = getContext().getContentResolver().query(pdf_uri, proj, null, null, null);
+                if (cursor != null && cursor.getCount() != 0) {
+                    int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.TITLE);
+                    cursor.moveToFirst();
+                    url_text.setText(cursor.getString(columnIndex) + "File selected!");
+                }
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }*//*
         }
-
-    }
+    }*/
 
     private void UploadFile() {
 
@@ -163,6 +222,12 @@ public class applyDialogFragment extends DialogFragment {
                 final ProgressDialog progressDialog = new ProgressDialog(getContext());
                 progressDialog.setTitle("Uploading...");
                 progressDialog.show();
+
+                /*SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog.setTitleText("Loading");
+                pDialog.setCancelable(false);
+                pDialog.show();*/
 
                 ApplicationModel applicationModel = new ApplicationModel();
                 applicationModel.setApplicantId(FirebaseAuth.getInstance().getUid());
@@ -189,7 +254,6 @@ public class applyDialogFragment extends DialogFragment {
                                 .child(key)
                                 .putFile(pdf_uri)
                                 .addOnSuccessListener(taskSnapshot -> {
-
                                     progressDialog.dismiss();
                                     taskSnapshot
                                             .getStorage()
@@ -200,47 +264,11 @@ public class applyDialogFragment extends DialogFragment {
                                                     .collection("Applications")
                                                     .document(key)
                                                     .update("url", uri.toString()));
+                                    Toast.makeText(getContext(),"Application wassuccessful...",Toast.LENGTH_LONG).show();
 
                                 }).addOnFailureListener(e ->
                                 Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show())).addOnFailureListener(e ->
                         Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show());
-
-                /*FirebaseFirestore
-                        .getInstance()
-                        .collection("Applications")
-                        .add(applicationModel)
-                        .addOnSuccessListener(documentReference -> {
-
-                            documentReference.update("job_key",key);
-                            FirebaseStorage.
-                                    getInstance()
-                                    .getReference()
-                                    .child("Applications")
-                                    .child(key)
-                                    .putFile(pdf_uri)
-                                    .addOnSuccessListener(taskSnapshot -> {
-                                        progressDialog.dismiss();
-                                        Toast.makeText(getContext(), "Uploaded Succesfully", Toast.LENGTH_SHORT).show();
-
-                                        taskSnapshot
-                                                .getStorage()
-                                                .getDownloadUrl()
-                                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                    @Override
-                                                    public void onSuccess(Uri uri) {
-
-                                                        FirebaseFirestore
-                                                                .getInstance()
-                                                                .collection("Applications")
-                                                                .document(key)
-                                                                .update("url", uri.toString());
-                                                    }
-                                                });
-                                    }).addOnFailureListener(e ->
-                                    Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show());
-                        })
-                        .addOnFailureListener(e ->
-                                Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show());*/
             }else {
                 Toast.makeText(getContext(),"Url empty!!!",Toast.LENGTH_LONG).show();
             }

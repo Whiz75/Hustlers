@@ -95,8 +95,8 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder> {
         void viewJob(int position,String pos, String title, String date);
     }
 
-    public void updateList(List<DataHolder> list){
-        mDataHolder = list;
+    public void filterList(ArrayList<JobModel> filterdNames) {
+        this.mList = filterdNames;
         notifyDataSetChanged();
     }
 }
